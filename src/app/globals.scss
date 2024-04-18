@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Moirai+One&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+@mixin px2vw($size, $width: 1920) {
+  width: percentage($size / $width);
+}
+@mixin px2padding($size, $width: 1920) {
+  padding:0px percentage($size / $width);
+}
+
+$default_padding : 0px 320px;
+$moiral_font : "Moirai One",
+system-ui;

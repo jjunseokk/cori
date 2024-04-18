@@ -1,0 +1,26 @@
+@import '../app/globals.scss';
+
+.header_container {
+    @include px2padding(320);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    border-bottom: 1px solid #000000;
+
+    .title {
+        font: 400 60px $moiral_font;
+    }
+
+    .right_menu {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+
+        >p {
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    }
+}

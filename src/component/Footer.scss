@@ -1,0 +1,46 @@
+@import '../app/globals.scss';
+
+
+.footer_container {
+    width: 100vw;
+    height: 200px;
+    border-top: 1px solid #000000;
+    margin-top: 100px;
+    padding: $default_padding;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    >div {
+        h1 {
+            font: 400 40px $moiral_font;
+        }
+
+        p {
+            text-align: start;
+            font-size: 15px;
+            font-weight: 400;
+            color: #D3D3D3;
+
+            &:first-of-type {
+                margin-top: 25px;
+            }
+        }
+
+        &:last-of-type {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+
+            p {
+                font-size: 20px;
+                cursor: pointer;
+                color: #151515;
+
+                &:first-of-type {
+                    margin-top: 0px;
+                }
+            }
+        }
+    }
+}

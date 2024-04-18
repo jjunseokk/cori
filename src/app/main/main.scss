@@ -1,0 +1,57 @@
+@import '../globals.scss';
+
+.main_container {
+    .main_wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        img {
+            margin-top: 150px;
+            margin-bottom: 70px;
+
+            &:nth-of-type(2) {
+                width: 219px;
+            }
+
+            &:last-of-type {
+                width: 235px;
+            }
+        }
+
+        p {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+
+            >span {
+                color: #82B7F6;
+            }
+        }
+
+        .cori_area {
+            display: flex;
+            align-items: center;
+            margin-top: 200px;
+
+            img {
+                width: 347px;
+                height: 428px;
+                display: block;
+            }
+
+            .text {
+                margin-left: 94px;
+                font-size: 25px;
+                font-weight: 700;
+                margin-top: 100px;
+
+                ol {
+                    padding-left: 20px;
+                }
+            }
+        }
+    }
+
+}
