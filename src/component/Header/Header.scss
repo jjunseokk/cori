@@ -1,4 +1,4 @@
-@import '../app/globals.scss';
+@import '../../app/globals.scss';
 
 .header_container {
     @include px2padding(320);
@@ -10,6 +10,7 @@
 
     .title {
         font: 400 60px $moiral_font;
+        cursor: pointer;
     }
 
     .right_menu {
@@ -21,6 +22,10 @@
             font-size: 20px;
             font-weight: 700;
             cursor: pointer;
+        }
+        >.active{
+            color: #82B7F6;
+            transition: all .5s;
         }
     }
 }

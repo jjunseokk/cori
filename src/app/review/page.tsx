@@ -1,9 +1,12 @@
-import React from 'react'
+import PageContent from "@/component/PageContent/PageContent";
+import React from "react";
 
-const page = () => {
+const Review = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div className="review_container">
+      <PageContent page="review" />
+    </div>
+  );
+};
 
-export default page
+export default Review;

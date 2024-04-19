@@ -10,8 +10,13 @@
 @mixin px2vw($size, $width: 1920) {
   width: percentage($size / $width);
 }
+
 @mixin px2padding($size, $width: 1920) {
-  padding:0px percentage($size / $width);
+  padding: 0px percentage($size / $width);
+}
+
+@mixin px2gap($size, $width: 1920) {
+  gap: (percentage($size / $width));
 }
 
 $default_padding : 0px 320px;

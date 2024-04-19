@@ -1,0 +1,60 @@
+@import '../../app/globals.scss';
+
+.review_wrapper {
+    @include px2padding(320);
+    overflow: hidden;
+
+    .hot_view {
+        // border: 1px solid red;
+        overflow: hidden;
+
+
+
+        >.title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+
+            >h1 {
+                font-size: 30px;
+                font-weight: 700;
+            }
+
+            >div {
+                >img {
+                    cursor: pointer;
+
+                    &:first-of-type {
+                        margin-right: 3px;
+                    }
+                }
+            }
+
+        }
+
+        >.content_item {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+            @include px2gap(35);
+        }
+    }
+
+    .review_item {
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            margin-top: 80px;
+        }
+
+        >div {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            @include px2gap(35);
+        }
+
+    }
+}
