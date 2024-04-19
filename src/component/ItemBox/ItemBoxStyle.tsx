@@ -39,20 +39,25 @@ export const Div = styled.div`
       justify-content: space-between;
       align-items: center;
       margin-top: ${px2vw(54)};
+      > p {
+        padding: ${px2vw(3)} ${px2vw(5)};
+        border: 1px solid #82b7f6;
+        border-radius: 15px;
+        color: #82b7f6;
+        font-size: 10px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+      }
       > div {
         display: flex;
         > p {
-          padding: ${px2vw(3)} ${px2vw(5)};
-          border: 1px solid #82b7f6;
-          border-radius: 15px;
-          color: #82b7f6;
-          font-size: 10px;
-          font-weight: 500;
-          display: flex;
-          align-items: center;
-          color: #959595;
           font-size: 15px;
           border: none;
+          color: #959595;
+          &:last-of-type {
+            margin-left: ${px2vw(10)};
+          }
           img {
             margin-right: ${px2vw(5)};
           }
@@ -67,6 +72,28 @@ export const Div = styled.div`
     }
   }
 
+  @media screen and (max-width: 1920px) {
+    .content {
+      > p {
+        font-size: 15px;
+      }
+      .middle {
+        margin-top: ${px2vw(40)};
+        > p {
+          font-size: 10px;
+        }
+        > div {
+          > p {
+            font-size: 15px;
+          }
+        }
+      }
+      .date {
+        font-size: 8px;
+      }
+    }
+  }
+
   @media screen and (max-width: 1440px) {
     .content {
       > p {
@@ -74,17 +101,14 @@ export const Div = styled.div`
       }
       .middle {
         margin-top: ${px2vw(40)};
-        > p {
-          font-size: 8px;
-          &:last-of-type {
-            font-size: 10px;
+        > div {
+          > p {
+            font-size: 15px;
           }
         }
       }
       .date {
-        color: #959595;
         font-size: 8px;
-        font-weight: 500;
       }
     }
   }

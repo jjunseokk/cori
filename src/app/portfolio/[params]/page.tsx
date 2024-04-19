@@ -4,7 +4,6 @@ import React from 'react'
 const PortfolioDetail = () => {
   return (
     <div>
-       <Write />
     </div>
   )
 }

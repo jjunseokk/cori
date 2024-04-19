@@ -4,7 +4,22 @@ import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import styled from "styled-components";
 
 const Div = styled.div`
-
+  .toastui-editor-contents {
+    > div {
+      > pre {
+        background: #ffffff;
+        > div {
+          > pre {
+            background: beige;
+          }
+        }
+      }
+    }
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+  }
 `;
 
 type ViewType = {

@@ -11,6 +11,10 @@
   width: percentage($size / $width);
 }
 
+@mixin px2vh($size, $width: 1920) {
+  width: percentage($size / $width);
+}
+
 @mixin px2padding($size, $width: 1920) {
   padding: 0px percentage($size / $width);
 }

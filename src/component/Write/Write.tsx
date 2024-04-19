@@ -21,11 +21,10 @@ const Write = () => {
     const editorIns = editorRef.current && editorRef.current.getInstance();
     if (editorIns) {
       const htmlContent = editorIns.getHTML();
-      setGetContent(htmlContent);
+      const preWrappedContent = `<pre>${htmlContent}</pre>`;
+      setGetContent(preWrappedContent);
     }
   };
-
-  console.log(getContent);
 
   return (
     <div className="write_container">
