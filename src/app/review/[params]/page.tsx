@@ -8,6 +8,7 @@ import backBtn from "../../../../public/backBtn.svg";
 import heart_off from "../../../../public/detail_heart_off.svg";
 import heart_on from "../../../../public/detail_heart_on.svg";
 import defaultIcon from "../../../../public/defaultIcon.svg";
+import ii from "../../../../public/ii.png";
 import styled from "styled-components";
 import { px2vw } from "@/util/px2vw";
 
@@ -18,7 +19,6 @@ const TextArea = styled.textarea`
   border-radius: 20px;
   padding: ${px2vw(30)};
   resize: none;
-  margin-left: ${px2vw(30)};
   font-size: 20px;
 
   &::placeholder {
@@ -28,11 +28,19 @@ const TextArea = styled.textarea`
   }
 `;
 
-const UserIcon = styled.div`
-  width: ${px2vw(50)};
-  height: ${px2vw(50)};
+type UserIconType = {
+  width?: number;
+};
+
+const UserIcon = styled.div<UserIconType>`
+  width: ${({ width }) => (width === 70 ? px2vw(70) : px2vw(50))};
+  height: ${({ width }) => (width === 70 ? px2vw(70) : px2vw(50))};
   border-radius: 50%;
   overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const Button = styled.button`
@@ -61,7 +69,7 @@ const ReviewDetail = () => {
     setGetCommentList((prev) => [...prev, getComment]);
     setGetComment("");
   };
-  console.log(getCommentList);
+  
   return (
     <div className="review_detail_container">
       <div className="review_detail_wrapper">
@@ -93,18 +101,26 @@ const ReviewDetail = () => {
         </div>
         <div></div>
 
-        <div className="comment">
+        <div className="commentArea">
           <h1>댓글</h1>
-          {/* {getCommentList?.map((value) => {
+          {getCommentList?.map((value) => {
             return (
-              <div key={Math.random()}>
-                <p>{value}</p>
+              <div className="comment" key={Math.random()}>
+                <UserIcon>
+                  <Image src={defaultIcon} alt="defaultIcon" />
+                </UserIcon>
+                <div>
+                  <p className="user">userID</p>
+                  {value.split("\n").map((comment) => (
+                    <p>{comment}</p>
+                  ))}
+                </div>
               </div>
             );
-          })} */}
-          <div>
-            <UserIcon>
-              <Image src={defaultIcon} alt="defaultIcon" />
+          })}
+          <div className="comment_write">
+            <UserIcon width={70}>
+              <Image src={ii} alt="defaultIcon" />
             </UserIcon>
             <TextArea
               onChange={(e) => {

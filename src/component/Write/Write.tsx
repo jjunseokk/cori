@@ -28,19 +28,16 @@ const Write = () => {
 
   return (
     <div className="write_container">
-      <h1>포트폴리오를 작성해보세요.</h1>
       <Editor
-        initialValue="포트폴리오를 작성해주세요."
+        initialValue="글을 작성해주세요."
         ref={editorRef}
         placeholder="포트폴리오를 작성해주세요."
         previewStyle="vertical"
         hideModeSwitch={true}
-        height="40rem"
+        height="60vh"
         initialEditType="markdown"
         useCommandShortcut={true}
-        onChange={() => {
-          sendContents();
-        }}
+      
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
       />
       <button onClick={sendContents}>제출</button>

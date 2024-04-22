@@ -48,11 +48,28 @@
         }
     }
 
-    .comment {
+    .commentArea {
         position: relative;
-        >div {
+
+        >.comment {
+            display: flex;
+            margin: 20px 0px;
+            
+            >div {
+                margin-left: 10px;
+
+                .user {
+                    font-size: 15px;
+                    font-weight: 700;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        >.comment_write {
             display: flex;
             align-items: flex-start;
+            justify-content: space-between;
             margin-top: 30px;
         }
     }
