@@ -32,8 +32,10 @@ const Header = () => {
           포트폴리오
         </p>
         <p
+          className={selectHeader === "addWrite" ? "active" : ""}
           onClick={() => {
             router.push("/addWrite");
+            setSelectHeader("addWrite");
           }}
         >
           새글 작성
