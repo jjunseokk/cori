@@ -25,6 +25,23 @@ const Div = styled.div`
       margin-top: ${px2vw(12)};
     }
   }
+
+  @media screen and (max-width: 1440px) {
+    > div {
+      .title {
+        font-size: 40px;
+        font-weight: 600;
+      }
+      .subTitle {
+        font-size: 18px;
+        font-weight: 500;
+        margin-top: ${px2vw(12)};
+      }
+    }
+    img{
+      width: ${px2vw(300)};
+    }
+  }
 `;
 
 type BannerType = {

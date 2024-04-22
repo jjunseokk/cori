@@ -1,0 +1,19 @@
+@import '../../app/globals.scss';
+
+
+.write_container {
+    @include px2padding(320);
+
+    h1 {
+        margin-top: 50px;
+    }
+
+    .toastui-editor-defaultUI {
+        margin-top: 20px;
+    }
+    .toastui-editor-md-link{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

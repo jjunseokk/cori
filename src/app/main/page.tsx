@@ -3,7 +3,7 @@ import React from "react";
 import "./main.scss";
 import Image from "next/image";
 import mainData from "./data/main.json";
-import Footer from "@/component/Footer";
+import Footer from "@/component/Footer/Footer";
 
 const Main = () => {
   function replaceSpan(text: string) {

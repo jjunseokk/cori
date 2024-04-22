@@ -1,0 +1,76 @@
+@import '../../globals.scss';
+
+
+.review_detail_wrapper {
+    @include px2padding(320);
+
+    .review_detail_title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 150px;
+
+        >div {
+            display: flex;
+            align-items: center;
+
+            img {
+                margin-right: 30px;
+                cursor: pointer;
+            }
+
+            h1 {
+                font-size: 40px;
+                font-weight: 700;
+            }
+        }
+
+        >img {
+            cursor: pointer;
+        }
+    }
+
+    .userArea {
+        display: flex;
+        align-items: center;
+        @include px2gap(15);
+        margin-top: 43px;
+
+        >p {
+            font-size: 15px;
+            font-weight: 700;
+
+            &:last-of-type {
+                font-size: 10px;
+                font-weight: 500;
+                color: #C2C2C2;
+            }
+        }
+    }
+
+    .commentArea {
+        position: relative;
+
+        >.comment {
+            display: flex;
+            margin: 20px 0px;
+            
+            >div {
+                margin-left: 10px;
+
+                .user {
+                    font-size: 15px;
+                    font-weight: 700;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        >.comment_write {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+    }
+}
