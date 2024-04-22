@@ -33,6 +33,13 @@ const Header = () => {
         </p>
         <p
           onClick={() => {
+            router.push("/addWrite");
+          }}
+        >
+          새글 작성
+        </p>
+        <p
+          onClick={() => {
             router.push("/login");
           }}
         >
