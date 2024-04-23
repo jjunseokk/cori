@@ -1,17 +1,44 @@
 @import '../globals.scss';
 
+.join_container {
+    position: relative;
+}
+
 .join_wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    h1{
+
+    h1 {
         margin-top: 152px;
         margin-bottom: 67px;
     }
+
     form {
         display: flex;
         justify-content: center;
         flex-direction: column;
+
+        >p {
+            font-size: 12px;
+            color: #82B7F6;
+        }
+    }
+
+    .join_modal {
+        @include px2vw(625);
+        height: 262px;
+        border: 1px solid black;
+        box-shadow: 4px 4px 4px 2px #00000040;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #ffffff;
     }
 }
