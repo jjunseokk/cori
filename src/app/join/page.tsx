@@ -3,21 +3,18 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./join.scss";
 import { Input } from "@/component/Input/Input";
 import { Button } from "@/component/Button/Button";
-import test from "node:test";
 import axios from "axios";
+import { showJoin } from "@/util/AxiosGet/AxiosUser";
+import { JoinFormData } from "@/type/userType";
+import { useRouter } from "next/navigation";
 
-interface JoinFormData {
-  name: string;
-  email: string;
-  password: string;
-  checkPassword: string;
-}
 interface ModalData {
   error: string | null;
   type: string | null;
 }
 
 const Join = () => {
+  const router = useRouter();
   const [joinFrom, setJoinFrom] = useState<JoinFormData>({
     name: "",
     email: "",
@@ -54,9 +51,12 @@ const Join = () => {
       setCheckPw(false);
       const { checkPassword, ...joinData } = joinFrom;
 
-      axios.post("http://localhost:8000/users", joinData).then((res) => {
+      showJoin(joinData).then((res) => {
         setModalContent(res.data);
       });
+      // axios.post("http://localhost:8000/users", joinData).then((res) => {
+      //   setModalContent(res.data);
+      // });
     }
   };
 
@@ -113,7 +113,13 @@ const Join = () => {
         ) : (
           <div className="join_modal">
             <p>회원가입을 축하드립니다.</p>
-            <Button>로그인하기</Button>
+            <Button
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              로그인하기
+            </Button>
           </div>
         )}
       </div>

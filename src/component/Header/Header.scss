@@ -18,12 +18,56 @@
         align-items: center;
         gap: 25px;
 
-        >p {
+        p {
             font-size: 20px;
             font-weight: 700;
             cursor: pointer;
         }
-        >.active{
+
+        div {
+            position: relative;
+
+            >div {
+                display: flex;
+                align-items: center;
+
+                .profile_img {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    margin-left: 5px;
+
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .my_page {
+                display: none;
+
+                >p {
+                    margin: 5px 0px;
+                    font-size: 15px;
+                }
+            }
+
+            .my_page.active {
+                width: 150px;
+                position: absolute;
+                top: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 15px;
+                background: #FFFFFF;
+                box-shadow: 2px 2px 2px 2px #D9D9D9;
+                border-radius: 5px;
+            }
+        }
+
+        >.active {
             color: #82B7F6;
             transition: all .5s;
         }

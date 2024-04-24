@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import Header from "@/component/Header/Header";
 import fa from "../../public/favicon.ico";
 import AuthContext from "@/util/AuthContext";
+import ReactQueryProviders from "@/util/QueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,8 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={myFont.className}>
-        <Header />
-        <AuthContext>{children}</AuthContext>
+        <ReactQueryProviders>
+          <Header />
+          <AuthContext>{children}</AuthContext>
+        </ReactQueryProviders>
       </body>
     </html>
   );

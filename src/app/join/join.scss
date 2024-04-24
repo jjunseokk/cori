@@ -27,7 +27,7 @@
     }
 
     .join_modal {
-        @include px2vw(625);
+        width: 625px;
         height: 262px;
         border: 1px solid black;
         box-shadow: 4px 4px 4px 2px #00000040;
