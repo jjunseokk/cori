@@ -3,7 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.scss";
 import localFont from "next/font/local";
 import Header from "@/component/Header/Header";
-import fa from "../../public/favicon.ico"
+import fa from "../../public/favicon.ico";
+import AuthContext from "@/util/AuthContext";
+import ReactQueryProviders from "@/util/QueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,8 +13,8 @@ export const metadata: Metadata = {
   title: "CORI",
   description: "모두의 코드 리뷰!",
   icons: {
-		icon: "/favicon.png",
-	},
+    icon: "/favicon.png",
+  },
 };
 
 const myFont = localFont({
@@ -28,8 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={myFont.className}>
-        <Header />
-        {children}
+        <ReactQueryProviders>
+          <Header />
+          <AuthContext>{children}</AuthContext>
+        </ReactQueryProviders>
       </body>
     </html>
   );

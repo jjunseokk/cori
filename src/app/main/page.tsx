@@ -16,8 +16,8 @@ const Main = () => {
         {mainData?.map((value) => (
           <React.Fragment key={value.id}>
             <Image
-              width={330.84}
-              height={243.36}
+              width={205}
+              height={238}
               src={value.img}
               alt="main_1"
               priority

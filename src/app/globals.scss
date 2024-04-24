@@ -12,7 +12,7 @@
 }
 
 @mixin px2vh($size, $width: 1920) {
-  width: percentage($size / $width);
+  height: percentage($size / $width);
 }
 
 @mixin px2padding($size, $width: 1920) {
@@ -26,3 +26,4 @@
 $default_padding : 0px 320px;
 $moiral_font : "Moirai One",
 system-ui;
+$main_color : #82b7f6;

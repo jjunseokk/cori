@@ -1,8 +1,10 @@
-import Write from "@/component/Write/Write";
 import React from "react";
+import dynamic from "next/dynamic";
+const NoSsrWysiwyg = dynamic(() => import('@/component/Write/Write'), { ssr: false })
+
 
 const AddWrite = () => {
-  return <Write />;
+  return <NoSsrWysiwyg />;
 };
 
 export default AddWrite;
