@@ -2,33 +2,30 @@
 import React, { useEffect, useState } from "react";
 import "./Header.scss";
 import { useRouter } from "next/navigation";
-import useTokenStore from "@/stores/token";
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "@/util/AxiosGet/AxiosUser";
 import Image from "next/image";
 
-import default_img from '../../../public/defaultIcon.svg';
-
-interface TokenType {
-  value: string;
-  expires: number;
-}
+import default_img from "../../../public/defaultIcon.svg";
+import userTokenStore from "@/stores/token";
 
 const Header = () => {
   const router = useRouter();
   const [selectHeader, setSelectHeader] = useState("");
   const [showMyPage, setShowMyPage] = useState<boolean>(false);
-  const { token }: { token: string } = useTokenStore() as { token: string };
 
-  const { data, status } = useQuery({
-    queryKey: ["popularList"],
-    queryFn: () => getUser(item?.value),
+  const { token, setToken }: any = userTokenStore();
+
+  console.log(token)
+  const { data } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUser(token?.value),
   });
 
-  console.log(data?.data.User);
-
-  const loginToken = localStorage.getItem("token");
-  const item: TokenType = JSON.parse(loginToken as string);
+  useEffect(() => {
+    const loginToken = JSON.parse(window.localStorage.getItem("token"));
+    setToken(loginToken);
+  }, []);
 
   return (
     <div className="header_container">
@@ -63,7 +60,7 @@ const Header = () => {
         >
           새글 작성
         </p>
-        {item?.value ? (
+        {token?.value ? (
           <div>
             <div>
               <p
@@ -77,7 +74,12 @@ const Header = () => {
                 {data?.data?.User[0].profileImg === null ? (
                   <Image src={default_img} alt="default_img" />
                 ) : (
-                  <Image src={data?.data.User[0].profileImg} alt="profileImg" />
+                  data?.data?.User[0].profileImg && (
+                    <Image
+                      src={data?.data.User[0].profileImg}
+                      alt="profileImg"
+                    />
+                  )
                 )}
               </div>
             </div>
@@ -88,6 +90,7 @@ const Header = () => {
               <p
                 onClick={() => {
                   localStorage.removeItem("token");
+                  router.push("/main");
                   location.reload();
                 }}
               >
