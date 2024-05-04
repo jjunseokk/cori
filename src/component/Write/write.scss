@@ -4,6 +4,42 @@
 .write_container {
     @include px2padding(320);
 
+    .modal_container {
+        width: 100vw;
+        height: 100vh;
+        background: rgba($color: black, $alpha: 0.5);
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 10;
+
+        >div {
+            @include px2vw(400);
+            @include px2vh(450);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            button {
+                width: 150px;
+                height: 25px;
+                border: none;
+                background: $main_color;
+                border-radius: 5px;
+                color: #ffffff;
+                margin-top: 15px;
+                cursor: pointer;
+            }
+        }
+    }
+
     h1 {
         margin-top: 50px;
     }
@@ -11,7 +47,8 @@
     .toastui-editor-defaultUI {
         margin-top: 20px;
     }
-    .toastui-editor-md-link{
+
+    .toastui-editor-md-link {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

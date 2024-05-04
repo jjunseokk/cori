@@ -43,11 +43,10 @@ const Login = () => {
 
       let now = new Date();
       const item = {
-        value: res.data.token,
+        user: res.data.user,
         expires: now.getTime() + 7 * 24 * 60 * 60 * 1000,
       };
       localStorage.setItem("token", JSON.stringify(item));
-      window.location.reload();
     });
   };
 
@@ -55,7 +54,7 @@ const Login = () => {
     const itemStr = localStorage.getItem("token");
     const item = itemStr ? JSON.parse(itemStr) : null;
     setToken(item);
-    item?.value ? router.push("/main") : null;
+    item?.user ? router.push("/main") : null;
   }, [getUser]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
