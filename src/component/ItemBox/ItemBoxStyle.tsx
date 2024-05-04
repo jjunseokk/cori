@@ -64,11 +64,16 @@ export const Div = styled.div`
         }
       }
     }
-    .date {
-      color: #959595;
-      font-size: 10px;
-      font-weight: 500;
-      margin-top: ${px2vw(17)};
+    .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      p {
+        color: #959595;
+        font-size: 10px;
+        font-weight: 500;
+        margin-top: ${px2vw(17)};
+      }
     }
   }
 
@@ -88,8 +93,10 @@ export const Div = styled.div`
           }
         }
       }
-      .date {
-        font-size: 8px;
+      .bottom {
+        p {
+          font-size: 8px;
+        }
       }
     }
   }
@@ -107,8 +114,10 @@ export const Div = styled.div`
           }
         }
       }
-      .date {
-        font-size: 8px;
+      .bottom {
+        p {
+          font-size: 8px;
+        }
       }
     }
   }

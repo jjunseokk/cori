@@ -8,10 +8,16 @@ import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import "prismjs/themes/prism.css";
 import Prism from "prismjs";
+import userTokenStore from "@/stores/token";
+import { useRouter } from "next/navigation";
 
 const Write = () => {
+  const router = useRouter();
   const editorRef = useRef<Editor | null>(null);
   const [getContent, setGetContent] = useState<string>("");
+  const [checkLogin, setCheckLogin] = useState<boolean>(false);
+  const { token }: any = userTokenStore();
+  const Token = token?.user?.token;
 
   useEffect(() => {
     Prism.highlightAll();
@@ -26,8 +32,23 @@ const Write = () => {
     }
   };
 
+  useEffect(() => {
+    if (Token === undefined) {
+      setCheckLogin(true);
+    }
+  }, [Token]);
+
   return (
     <div className="write_container">
+      {checkLogin ? (
+        <div className="modal_container">
+          <div>
+            <p>로그인 후 이용해주세요.</p>
+            <button onClick={() => router.push("/login")}>확인</button>
+          </div>
+        </div>
+      ) : null}
+
       <Editor
         initialValue="글을 작성해주세요."
         ref={editorRef}

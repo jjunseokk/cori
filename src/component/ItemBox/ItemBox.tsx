@@ -40,7 +40,10 @@ const ItemBox = ({ title, type, path }: ItemBoxType) => {
             </p>
           </div>
         </div>
-        <p className="date">등록일 2024.04.04</p>
+        <div className="bottom">
+          <p className="date">등록일 2024.04.04</p>
+          <p>작성자</p>
+        </div>
       </div>
     </Div>
   );
