@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 import { Div } from "./ItemBoxStyle";
 import { useRouter } from "next/navigation";
-import moment from "moment";
 
 import heart_off from "../../../public/heart_off.png";
 import heart_on from "../../../public/heart_on.png";
@@ -38,7 +37,11 @@ const ItemBox = ({ type, path, data }: ItemBoxType) => {
   });
 
   const writeDate = new Date(data?.createdPost);
-  const formattedDate = moment(writeDate).format("YYYY.MM.DD");
+  const getYear = writeDate.getFullYear();
+  const getMonth = writeDate.getMonth() + 1;
+  const getDate = writeDate.getDate();
+
+  const formattedDate = `${getYear}.${getMonth}.${getDate}`;
 
   return (
     <Div

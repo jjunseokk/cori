@@ -38,7 +38,6 @@ export default function Profile() {
 
   const { token }: any = userTokenStore();
   const Token = token?.user?.token;
-  console.log(token);
 
   const HandleClick = () => {
     fileRef.current.click();
@@ -120,9 +119,9 @@ export default function Profile() {
   useEffect(() => {
     const login = JSON.parse(localStorage.getItem("token"));
     console.log(login);
-    // if (token?.user?.token === undefined) {
-    //   router.push("/main");
-    // }
+    if (token?.user?.token === undefined) {
+      router.push("/main");
+    }
   }, []);
 
   useEffect(() => {

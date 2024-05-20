@@ -15,6 +15,13 @@ const Header = () => {
   const [showMyPage, setShowMyPage] = useState<boolean>(false);
 
   const { token, setToken }: any = userTokenStore();
+  const Token = token?.user?.token;
+
+  const { data } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUser(Token),
+    enabled: !!Token,
+  });
 
   useEffect(() => {
     const loginToken = JSON.parse(window.localStorage.getItem("token"));
@@ -67,16 +74,15 @@ const Header = () => {
                 마이페이지
               </p>
               <div className="profile_img">
-                {token?.user.profileImg === null ? (
-                  <Image
-                    src={default_img}
-                    alt="default_img"
-                  />
+                {data?.data.User[0].profileImg === null ? (
+                  <Image src={default_img} alt="default_img" />
                 ) : (
-                  token?.user.profileImg && (
+                  data?.data.User[0].profileImg && (
                     <Image
-                      src={token?.user.profileImg}
+                      src={data?.data.User[0].profileImg}
                       alt="profileImg"
+                      width={100}
+                      height={100}
                     />
                   )
                 )}
