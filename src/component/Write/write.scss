@@ -3,6 +3,7 @@
 
 .write_container {
     @include px2padding(320);
+    position: relative;
 
     .modal_container {
         width: 100vw;
@@ -40,8 +41,30 @@
         }
     }
 
-    h1 {
+    .title {
         margin-top: 50px;
+        width: 100%;
+        height: 30px;
+        border: none;
+        border-bottom: 1px solid #dddddddd;
+        font-size: 20px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    select {
+        width: 200px;
+        height: 40px;
+        padding: 5px;
+        margin-top: 10px;
+    }
+
+    .toastui-editor-contents {
+        h1 {
+            border: none;
+        }
     }
 
     .toastui-editor-defaultUI {
@@ -52,5 +75,46 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    .submit {
+        width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        color: #ffffff;
+        font-size: 16px;
+        background: $main_color;
+        border: none;
+        float: right;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    .successModal {
+        width: 300px;
+        height: 100px;
+        background: #FFFFFF;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        button {
+            width: 100px;
+            height: 30px;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 16px;
+            background: $main_color;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+        }
     }
 }

@@ -10,25 +10,37 @@ import "prismjs/themes/prism.css";
 import Prism from "prismjs";
 import userTokenStore from "@/stores/token";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { addPost } from "@/util/AxiosGet/AxiosPost";
+import { AddPostData } from "@/type/postType";
 
 const Write = () => {
   const router = useRouter();
   const editorRef = useRef<Editor | null>(null);
-  const [getContent, setGetContent] = useState<string>("");
+  const [getSelect, setGetSelect] = useState<string>("review");
+  const [showSuccessModal, setShowSuccessModal] = useState<string>("");
+  const [getTitle, setGetTitle] = useState<string>("");
   const [checkLogin, setCheckLogin] = useState<boolean>(false);
   const { token }: any = userTokenStore();
   const Token = token?.user?.token;
 
-  useEffect(() => {
-    Prism.highlightAll();
-  }, []);
+  const addPostMutation = useMutation({
+    mutationFn: (postData: AddPostData) => addPost(postData, Token),
+    onSuccess: (res) => {
+      setShowSuccessModal(res.data.message);
+    },
+  });
 
   const sendContents = () => {
     const editorIns = editorRef.current && editorRef.current.getInstance();
     if (editorIns) {
       const htmlContent = editorIns.getHTML();
       const preWrappedContent = `<pre>${htmlContent}</pre>`;
-      setGetContent(preWrappedContent);
+      addPostMutation.mutate({
+        title: getTitle,
+        content: preWrappedContent,
+        selectOption: getSelect,
+      });
     }
   };
 
@@ -37,6 +49,12 @@ const Write = () => {
       setCheckLogin(true);
     }
   }, [Token]);
+
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
+
+  const option = [{ selectOption: "review" }, { selectOption: "portfolio" }];
 
   return (
     <div className="write_container">
@@ -48,7 +66,28 @@ const Write = () => {
           </div>
         </div>
       ) : null}
-
+      <input
+        className="title"
+        type="text"
+        value={getTitle}
+        placeholder="글 제목을 입력해주세요."
+        onChange={(e) => {
+          setGetTitle(e.target.value);
+        }}
+      />
+      <select
+        onChange={(e) => {
+          setGetSelect(e.target.value);
+        }}
+      >
+        {option.map((value) => {
+          return (
+            <option key={value.selectOption}>
+              {value.selectOption === "review" ? "코드리뷰" : "포트폴리오"}
+            </option>
+          );
+        })}
+      </select>
       <Editor
         initialValue="글을 작성해주세요."
         ref={editorRef}
@@ -60,7 +99,22 @@ const Write = () => {
         useCommandShortcut={true}
         plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
       />
-      <button onClick={sendContents}>제출</button>
+      <button className="submit" onClick={sendContents}>
+        제출
+      </button>
+      {showSuccessModal === "success" ? (
+        <div className="successModal">
+          <p>글 등록이 완료되었습니다.</p>
+          <button
+            onClick={() => {
+              setShowSuccessModal("");
+            }}
+          >
+            확인
+          </button>
+        </div>
+      ) : null}
+
       {/* <div>
         <ViewerComponent content={getContent} />
       </div> */}

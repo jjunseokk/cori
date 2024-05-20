@@ -55,6 +55,9 @@ export const Div = styled.div`
           font-size: 15px;
           border: none;
           color: #959595;
+          display: flex;
+          align-items: center;
+
           &:last-of-type {
             margin-left: ${px2vw(10)};
           }
@@ -73,6 +76,9 @@ export const Div = styled.div`
         font-size: 10px;
         font-weight: 500;
         margin-top: ${px2vw(17)};
+        span {
+          color: #151515;
+        }
       }
     }
   }

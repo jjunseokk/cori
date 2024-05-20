@@ -10,6 +10,8 @@ import right_btn from "../../../public/rightBtn.svg";
 import left_btn from "../../../public/leftBtn.svg";
 import bannerImg_1 from "../../../public/bannerImg_1.svg";
 import bannerImg_2 from "../../../public/bannerImg_2.svg";
+import { useQuery } from "@tanstack/react-query";
+import { showPostList, showTop10 } from "@/util/AxiosGet/AxiosPost";
 
 type PageContent = {
   page: string;
@@ -17,6 +19,16 @@ type PageContent = {
 
 const PageContent = ({ page }: PageContent) => {
   const [position, setPosition] = useState(0);
+
+  const { data: postList } = useQuery({
+    queryKey: ["getPost"],
+    queryFn: () => showPostList(page),
+  });
+
+  const { data: Top10 } = useQuery({
+    queryKey: ["getTop10"],
+    queryFn: () => showTop10(page),
+  });
 
   // 왼쪽으로 스와이프하는 함수
   const swipeLeft = () => {
@@ -53,82 +65,53 @@ const PageContent = ({ page }: PageContent) => {
           <div className="title">
             <h1>HOT🔥 {page === "review" ? "조회수" : "포트폴리오"}</h1>
             <div>
-              <Image src={left_btn} alt="left" onClick={swipeLeft} />{" "}
-              <Image src={right_btn} alt="right" onClick={swipeRight} />{" "}
+              <Image
+                width="0"
+                height="0"
+                priority={true}
+                src={left_btn}
+                alt="left"
+                onClick={swipeLeft}
+              />
+              <Image
+                width="0"
+                height="0"
+                priority={true}
+                src={right_btn}
+                alt="right"
+                onClick={swipeRight}
+              />
             </div>
           </div>
           <div
             className="content_item"
             style={{ transform: `translateX(${position}%)` }}
           >
-            <ItemBox
-              path={`/review/${1}`}
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              path={`/review/${1}`}
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              path={`/review/${1}`}
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              path={`/review/${1}`}
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              path={`/review/${1}`}
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              path={`/review/${1}`}
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
+            {Top10?.data.postList.map((value) => {
+              return (
+                <ItemBox
+                  path={`/detail/${value.postId}`}
+                  type={page}
+                  data={value}
+                  key={value.postId}
+                />
+              );
+            })}
           </div>
         </div>
         <div className="review_item">
           <h1>전체글</h1>
           <div>
-            <ItemBox
-              path={`/review/${1}`}
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
-            <ItemBox
-              title={"Props 주는 방법이 맞나요?"}
-              type={page === "review" ? "review" : "portfolio"}
-            />
+            {postList?.data.postList.map((value) => {
+              return (
+                <ItemBox
+                  path={`/detail/${value.postId}`}
+                  data={value}
+                  type={page}
+                  key={value.postId}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

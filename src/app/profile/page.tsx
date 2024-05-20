@@ -26,7 +26,7 @@ export default function Profile() {
     position: "",
     explanation: "",
   });
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState();
   const [warning, setWarning] = useState<Warning>({
     message: "",
     position: true,
@@ -54,7 +54,9 @@ export default function Profile() {
     mutationFn: (profileData: UpdateFormData) => returnUpdate(profileData),
     onSuccess: (res) => {
       setWarning(res.data);
-      window.location.reload();
+      if (warning.position) {
+        // window.location.reload();
+      }
     },
     onError: (error) => {},
   });
@@ -73,7 +75,6 @@ export default function Profile() {
     const file = e.target.files[0];
     setImage(file);
   };
-
   const handleNameChange = (e) => {
     setUserData((prevUserData) => ({
       ...prevUserData,

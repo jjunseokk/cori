@@ -11,8 +11,7 @@ import userTokenStore from "@/stores/token";
 
 const Header = () => {
   const router = useRouter();
-  const path = usePathname()
-  const [selectHeader, setSelectHeader] = useState("");
+  const path = usePathname();
   const [showMyPage, setShowMyPage] = useState<boolean>(false);
 
   const { token, setToken }: any = userTokenStore();
@@ -22,14 +21,11 @@ const Header = () => {
     setToken(loginToken);
   }, []);
 
-  console.log(path)
-
   return (
     <div className="header_container">
       <h1
         className="title"
         onClick={() => {
-          setSelectHeader("");
           router.push("/main");
         }}
       >
@@ -72,10 +68,16 @@ const Header = () => {
               </p>
               <div className="profile_img">
                 {token?.user.profileImg === null ? (
-                  <Image src={default_img} alt="default_img" />
+                  <Image
+                    src={default_img}
+                    alt="default_img"
+                  />
                 ) : (
                   token?.user.profileImg && (
-                    <Image src={token?.user.profileImg} alt="profileImg" />
+                    <Image
+                      src={token?.user.profileImg}
+                      alt="profileImg"
+                    />
                   )
                 )}
               </div>

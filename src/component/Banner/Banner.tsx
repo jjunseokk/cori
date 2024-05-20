@@ -38,7 +38,7 @@ const Div = styled.div`
         margin-top: ${px2vw(12)};
       }
     }
-    img{
+    img {
       width: ${px2vw(300)};
     }
   }
@@ -58,7 +58,7 @@ const Banner = ({ title, subTitle, img, color }: BannerType) => {
         <p className="title">{title}</p>
         <p className="subTitle">{subTitle}</p>
       </div>
-      <Image src={img} alt="img" />
+      <Image width="0" height="0" priority={true} src={img} alt="img" />
     </Div>
   );
 };
