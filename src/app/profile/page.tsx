@@ -10,6 +10,7 @@ import userTokenStore from "@/stores/token";
 import { useRouter } from "next/navigation";
 import { Button } from "@/component/Button/Button";
 import { UpdateFormData } from "@/type/userType";
+import { AxiosError } from "axios";
 
 interface Warning {
   message: string;
@@ -25,16 +26,19 @@ export default function Profile() {
     name: "",
     position: "",
     explanation: "",
+    profileImg: "",
   });
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
   const [warning, setWarning] = useState<Warning>({
     message: "",
     position: true,
     statusCode: 200,
   });
+  const [imagePreview, setImagePreview] = useState(null);
 
   const { token }: any = userTokenStore();
   const Token = token?.user?.token;
+  console.log(token);
 
   const HandleClick = () => {
     fileRef.current.click();
@@ -53,12 +57,14 @@ export default function Profile() {
   const updateMutation = useMutation({
     mutationFn: (profileData: UpdateFormData) => returnUpdate(profileData),
     onSuccess: (res) => {
-      setWarning(res.data);
-      if (warning.position) {
-        // window.location.reload();
+      window.location.reload();
+    },
+    onError: (error: unknown) => {
+      if (error instanceof AxiosError) {
+        setWarning(error.response.data);
+        console.log(error.response.data.message);
       }
     },
-    onError: (error) => {},
   });
 
   const updateProfileClick = () => {
@@ -74,7 +80,22 @@ export default function Profile() {
   const getImage = (e: any) => {
     const file = e.target.files[0];
     setImage(file);
+
+    if (e.target.files !== null) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        new Promise((resolve) => {
+          reader.onload = () => {
+            setImagePreview(reader.result as string);
+            resolve(null);
+          };
+        });
+      }
+    }
   };
+
   const handleNameChange = (e) => {
     setUserData((prevUserData) => ({
       ...prevUserData,
@@ -97,9 +118,11 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    if (token?.user?.token === undefined) {
-      router.push("/main");
-    }
+    const login = JSON.parse(localStorage.getItem("token"));
+    console.log(login);
+    // if (token?.user?.token === undefined) {
+    //   router.push("/main");
+    // }
   }, []);
 
   useEffect(() => {
@@ -108,6 +131,8 @@ export default function Profile() {
         ...prevUserData,
         name: prevUserData.name || data.data.User[0].name || "",
         position: prevUserData.position || data.data.User[0].position || "",
+        profileImg:
+          prevUserData.profileImg || data.data.User[0].profileImg || "",
         explanation:
           prevUserData.explanation || data.data.User[0].explanation || "",
       }));
@@ -119,7 +144,18 @@ export default function Profile() {
       <div className="profile_wrapper">
         <div onClick={HandleClick} className="profile_img">
           <div className="image">
-            <Image src={default_img} alt="default_img" />
+            <Image
+              src={
+                imagePreview
+                  ? imagePreview
+                  : userData.profileImg === ""
+                  ? default_img
+                  : userData.profileImg
+              }
+              width={100}
+              height={100}
+              alt="default_img"
+            />
             <Image className="setting" src={setting} alt="default_img" />
           </div>
           <input
