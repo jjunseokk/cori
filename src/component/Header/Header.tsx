@@ -8,6 +8,7 @@ import Image from "next/image";
 
 import default_img from "../../../public/defaultIcon.svg";
 import userTokenStore from "@/stores/token";
+import { signOut } from "next-auth/react";
 
 const Header = () => {
   const router = useRouter();
@@ -90,10 +91,17 @@ const Header = () => {
             </div>
 
             <div className={showMyPage === true ? "my_page active" : "my_page"}>
-              <p>내 작성글</p>
+              <p
+                onClick={() => {
+                  setShowMyPage(false);
+                }}
+              >
+                내 작성글
+              </p>
               <p
                 onClick={() => {
                   router.push("/profile");
+                  setShowMyPage(false);
                 }}
               >
                 설정

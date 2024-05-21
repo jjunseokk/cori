@@ -3,10 +3,11 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import "./join.scss";
 import { Input } from "@/component/Input/Input";
 import { Button } from "@/component/Button/Button";
-import axios from "axios";
-import { showJoin } from "@/util/AxiosGet/AxiosUser";
+import axios, { AxiosError } from "axios";
+import { emailCertification, showJoin } from "@/util/AxiosGet/AxiosUser";
 import { JoinFormData } from "@/type/userType";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 interface ModalData {
   error: string | null;
@@ -17,12 +18,44 @@ const Join = () => {
   const router = useRouter();
   const [joinFrom, setJoinFrom] = useState<JoinFormData>({
     name: "",
+    loginId: "",
     email: "",
+    emailCertification: null,
     password: "",
     checkPassword: "",
   });
   const [checkPw, setCheckPw] = useState<boolean>(false);
+  const [checkId, setCheckId] = useState<string>(null);
+  const [checkCertification, setCheckCertification] = useState<string>();
+  const [successCertification, setSuccessCertification] =
+    useState<boolean>(false);
   const [modalContent, setModalContent] = useState<ModalData>();
+  const [certificationNumber, setCertificationNumber] = useState<number>();
+
+  const showJoinMutation = useMutation({
+    mutationFn: (joinData: JoinFormData) => showJoin(joinData),
+    onSuccess: (res) => {
+      setModalContent(res.data);
+    },
+    onError: (error: unknown) => {
+      if (error instanceof AxiosError) {
+        setCheckId(error.response.data.message);
+      }
+    },
+  });
+
+  const emailCertificationMutation = useMutation({
+    mutationFn: (email: string) => emailCertification(email),
+    onSuccess: (res) => {
+      setCheckCertification(res.data.message);
+      setCertificationNumber(res.data.authNum);
+    },
+    onError: (error: unknown) => {
+      if (error instanceof AxiosError) {
+        setCheckCertification(error.response.data.message);
+      }
+    },
+  });
 
   const handleChangeJoin = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -37,8 +70,6 @@ const Join = () => {
     const passwordRegex = /^(?=.*[^A-Za-z0-9])[^\s(){}\[\]'"]{8,20}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // console.log(joinFrom);
-
     if (joinFrom.name === "") {
       alert("이름을 입력해주세요.");
     } else if (!passwordRegex.test(joinFrom.password)) {
@@ -47,16 +78,25 @@ const Join = () => {
       setCheckPw(true);
     } else if (!emailRegex.test(joinFrom.email)) {
       alert("이메일을 올바르게 작성해주세요.");
+    } else if (!successCertification) {
+      alert("이메일 인증을 완료해주세요.");
     } else {
       setCheckPw(false);
       const { checkPassword, ...joinData } = joinFrom;
 
-      showJoin(joinData).then((res) => {
-        setModalContent(res.data);
-      });
-      // axios.post("http://localhost:8000/users", joinData).then((res) => {
-      //   setModalContent(res.data);
-      // });
+      showJoinMutation.mutate(joinData);
+    }
+  };
+
+  const handleEmailCertification = () => {
+    emailCertificationMutation.mutate(joinFrom.email);
+  };
+
+  const handleCertificationCheck = () => {
+    if (joinFrom.emailCertification == certificationNumber) {
+      setSuccessCertification(true);
+    } else {
+      setSuccessCertification(false);
     }
   };
 
@@ -72,13 +112,41 @@ const Join = () => {
             type="text"
             name="name"
           />
-          <label>이메일</label>
+          <label>아이디</label>
           <Input
             onChange={handleChangeJoin}
-            placeholder="이메일을 입력해주세요."
-            type="email"
-            name="email"
+            placeholder="아이디를 입력해주세요."
+            type="text"
+            name="loginId"
           />
+          {checkId ? <p>{checkId}</p> : null}
+          <label>이메일</label>
+          <div>
+            <Input
+              onChange={handleChangeJoin}
+              placeholder="이메일을 입력해주세요."
+              type="email"
+              name="email"
+            />
+            <button type="button" onClick={handleEmailCertification}>
+              인증
+            </button>
+          </div>
+          {checkCertification ? <p>{checkCertification}</p> : null}
+
+          <label>인증번호</label>
+          <div>
+            <Input
+              onChange={handleChangeJoin}
+              placeholder="인증번호를 입력해주세요."
+              type="text"
+              name="emailCertification"
+            />
+            <button type="button" onClick={handleCertificationCheck}>
+              확인
+            </button>
+          </div>
+
           <label>비밀번호</label>
           <Input
             onChange={handleChangeJoin}

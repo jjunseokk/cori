@@ -6,6 +6,11 @@ const showJoin = (user: JoinFormData) => {
   return AxiosConfig.post("/users", user).then((res) => res);
 };
 
+// 이메일 인증
+const emailCertification = (email: string) => {
+  return AxiosConfig.post("/users/emailCertification", {email});
+};
+
 // 로그인
 const showLogin = (user: LoginFormData) => {
   return AxiosConfig.post("/users/login", user).then((res) => res);
@@ -22,7 +27,7 @@ const getUser = (Token: string) => {
 
 // 프로필 업데이트
 const updateProfile = (profile: UpdateFormData) => {
-  console.log(profile)
+  console.log(profile);
   const formData = new FormData();
   if (profile.profileImage) {
     formData.append("image", profile.profileImage);
@@ -30,13 +35,13 @@ const updateProfile = (profile: UpdateFormData) => {
   formData.append("name", profile.name);
   formData.append("explanation", profile.explanation);
   formData.append("position", profile.position);
-  
+
   return AxiosConfig.post("/users/updateProfile", formData, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${profile.token}`,
     },
   });
 };
 
-export { showJoin, showLogin, getUser, updateProfile };
+export { showJoin, showLogin, getUser, updateProfile, emailCertification };

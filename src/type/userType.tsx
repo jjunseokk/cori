@@ -1,12 +1,14 @@
 export interface JoinFormData {
   name: string;
+  loginId: string;
   email: string;
+  emailCertification: number;
   password: string;
   checkPassword?: string;
 }
 
 export interface LoginFormData {
-  email: string;
+  loginId: string;
   password: string;
 }
 

@@ -9,7 +9,7 @@ export const Input = styled.input`
   /* height: ${px2vw(30)}; */
   border: none;
   border-bottom: 1px solid black;
-  margin-bottom: ${px2vw(20)};
+  margin: ${px2vw(10)} 0px;
   padding-left: ${px2vw(5)};
   transition: all .5s;
 

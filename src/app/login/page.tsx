@@ -15,39 +15,43 @@ import github from "../../../public/github.svg";
 import google from "../../../public/google.svg";
 import kakao from "../../../public/kakao.svg";
 import Footer from "@/component/Footer/Footer";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 const Login = () => {
   const { setToken } = useTokenStore() as { setToken: (token: any) => void };
 
   const router = useRouter();
   const [loginForm, setLoginForm] = useState<LoginFormData>({
-    email: "",
+    loginId: "",
     password: "",
   });
-
-  const [getUser, setGetUser] = useState({
-    message: "",
-    status: "",
-    statusCode: "",
-  });
+  const [getUser, setGetUser] = useState<boolean>(false);
+  const [warning, setWarning] = useState<string>(null);
 
   const { data: session } = useSession();
-
-  console.log("session",session);
-
-  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // console.log("Submitted Form Data:", loginForm);
-    showLogin(loginForm).then((res) => {
-      setGetUser(res.data);
-
+  const loginMutation = useMutation({
+    mutationFn: (loginData: LoginFormData) => showLogin(loginData),
+    onSuccess: (res) => {
+      setGetUser(true);
       let now = new Date();
       const item = {
         user: res.data.user,
         expires: now.getTime() + 7 * 24 * 60 * 60 * 1000,
       };
       localStorage.setItem("token", JSON.stringify(item));
-    });
+    },
+    onError: (error: unknown) => {
+      if (error instanceof AxiosError) {
+        setWarning(error.response.data.message);
+      }
+    },
+  });
+  console.log("session", session);
+
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    loginMutation.mutate(loginForm);
   };
 
   useEffect(() => {
@@ -67,36 +71,35 @@ const Login = () => {
       <div className="login_wrapper">
         <h1>로그인</h1>
         <form onSubmit={handleLogin}>
-          <label>이메일</label>
+          <label>아이디</label>
           <Input
             onChange={handleInputChange}
-            type="email"
-            name="email"
-            id="eamil"
+            type="text"
+            name="loginId"
+            id="loginId"
           />
-          <label>비밀번호</label>
 
+          <label>비밀번호</label>
           <Input
             onChange={handleInputChange}
             type="password"
             name="password"
             id="password"
           />
-          <p>{getUser?.message}</p>
+          {warning ? <p>{warning}</p> : null}
           <Button>로그인</Button>
+          <div>
+            <p>ID/PW 찾기</p>
+            <p
+              onClick={() => {
+                router.push("/join");
+              }}
+            >
+              회원 가입
+            </p>
+          </div>
         </form>
-        <div>
-          <p>ID/PW 찾기</p>
-          <p
-            onClick={() => {
-              router.push("/join");
-            }}
-          >
-            회원 가입
-          </p>
-        </div>
-        <h1>소셜</h1>
-        <div className="social">
+        {/* <div className="social">
           <Image
             onClick={() => {
               signIn("github");
@@ -118,7 +121,7 @@ const Login = () => {
             src={kakao}
             alt="kakao"
           />
-        </div>
+        </div> */}
       </div>
 
       <Footer />

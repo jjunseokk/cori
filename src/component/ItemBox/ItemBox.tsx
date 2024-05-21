@@ -17,6 +17,7 @@ interface ItemData {
   content: string;
   createdPost: string;
   postId: number;
+  loginId: string;
   view?: null | number;
   selectOption: string;
 }
@@ -74,7 +75,7 @@ const ItemBox = ({ type, path, data }: ItemBoxType) => {
         <div className="bottom">
           <p className="date">등록일 {formattedDate}</p>
           <p>
-            작성자 <span>{data?.name}</span>
+            작성자 <span>{data?.loginId}</span>
           </p>
         </div>
       </div>
