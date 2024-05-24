@@ -4,11 +4,12 @@ import styled from "styled-components";
 type ButtonType = {
   width?: number;
   height?: number;
+  color?: boolean;
 };
 export const Button = styled.button<ButtonType>`
   width: ${({ width }) => (width ? width : 466)}px;
   height: ${({ height }) => (height ? height : 45)}px;
-  background: #82b7f6;
+  background: ${({color})=>(color? "#d9d9d9d9" : "#82b7f6")};
   border-radius: 10px;
   color: #ffffff;
   font-size: 25px;

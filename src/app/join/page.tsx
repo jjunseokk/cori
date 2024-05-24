@@ -17,12 +17,12 @@ interface ModalData {
 const Join = () => {
   const router = useRouter();
   const [joinFrom, setJoinFrom] = useState<JoinFormData>({
-    name: "",
-    loginId: "",
-    email: "",
+    name: null,
+    loginId: null,
+    email: null,
     emailCertification: null,
-    password: "",
-    checkPassword: "",
+    password: null,
+    checkPassword: null,
   });
   const [checkPw, setCheckPw] = useState<boolean>(false);
   const [checkId, setCheckId] = useState<string>(null);
@@ -31,6 +31,14 @@ const Join = () => {
     useState<boolean>(false);
   const [modalContent, setModalContent] = useState<ModalData>();
   const [certificationNumber, setCertificationNumber] = useState<number>();
+
+  const successButton =
+    joinFrom.name &&
+    joinFrom.loginId &&
+    joinFrom.email &&
+    joinFrom.emailCertification &&
+    joinFrom.password &&
+    joinFrom.checkPassword;
 
   const showJoinMutation = useMutation({
     mutationFn: (joinData: JoinFormData) => showJoin(joinData),
@@ -128,7 +136,16 @@ const Join = () => {
               type="email"
               name="email"
             />
-            <button type="button" onClick={handleEmailCertification}>
+            <button
+              className={
+                joinFrom.email
+                  ? "emailCertificationBtn"
+                  : "emailCertificationBtn active"
+              }
+              disabled={joinFrom.email ? false : true}
+              type="button"
+              onClick={handleEmailCertification}
+            >
               인증
             </button>
           </div>
@@ -142,7 +159,16 @@ const Join = () => {
               type="text"
               name="emailCertification"
             />
-            <button type="button" onClick={handleCertificationCheck}>
+            <button
+              disabled={joinFrom.emailCertification ? false : true}
+              className={
+                joinFrom.emailCertification
+                  ? "emailCertificationBtn"
+                  : "emailCertificationBtn active"
+              }
+              type="button"
+              onClick={handleCertificationCheck}
+            >
               확인
             </button>
           </div>
@@ -163,7 +189,12 @@ const Join = () => {
           />
           {checkPw === true ? <p>비밀번호가 일치하지 않습니다.</p> : null}
 
-          <Button>회원가입</Button>
+          <Button
+            color={successButton ? false : true}
+            disabled={successButton ? false : true}
+          >
+            회원가입
+          </Button>
         </form>
         {modalContent === undefined ? null : modalContent?.type === "error" ? (
           <div className="join_modal">
