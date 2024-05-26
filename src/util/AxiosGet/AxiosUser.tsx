@@ -27,7 +27,6 @@ const getUser = (Token: string) => {
 
 // 프로필 업데이트
 const updateProfile = (profile: UpdateFormData) => {
-  console.log(profile);
   const formData = new FormData();
   if (profile.profileImage) {
     formData.append("image", profile.profileImage);

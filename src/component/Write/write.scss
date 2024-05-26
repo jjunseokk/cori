@@ -1,7 +1,137 @@
 @import '../../app/globals.scss';
 
+body {
+    overflow-x: hidden;
+}
 
 .write_container {
+
+    .thumbnail-position {
+        z-index: 10;
+        width: 100vw;
+        height: 100vh;
+        background: rgba($color: #000000, $alpha: .5);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .thumbnail-area {
+            @include px2vw(1000);
+            border-radius: 10px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 10px;
+            background: #FFFFFF;
+            position: absolute;
+
+            >img {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                cursor: pointer;
+            }
+
+            >p {
+                margin-bottom: 20px;
+                font-size: 12px;
+                color: #9c9c9c;
+            }
+
+            >.thumbnail {
+                @include px2vw(1000);
+                height: 300px;
+
+                >img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            >div {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                @include px2vw(1000);
+                margin-top: 5px;
+
+                >p {
+                    font-size: 15px;
+                    text-decoration: underline;
+                    cursor: pointer;
+                    color: #9c9c9c;
+
+                    &:last-of-type {
+                        margin-right: 10px;
+                    }
+                }
+            }
+
+            >input {
+                display: none;
+            }
+
+            >button {
+                width: 100px;
+                height: 30px;
+                border-radius: 5px;
+                color: #ffffff;
+                font-size: 16px;
+                background: $main_color;
+                border: none;
+                float: right;
+                cursor: pointer;
+                margin: 10px 0px 10px 0px;
+            }
+        }
+    }
+
+    .alert {
+        @include px2vw(400);
+        height: 50px;
+        display: flex;
+        align-items: center;
+        background: red;
+        position: absolute;
+        top: 10px;
+        right: 0px;
+        z-index: 10;
+
+        >p {
+            color: #e1e1e1;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        >.loading {
+            background: #FFFFFF;
+            width: 100%;
+            height: 5px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            animation: loadingAnimation 4s linear forwards;
+        }
+    }
+}
+
+@keyframes loadingAnimation {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+.write_wrapper {
     @include px2padding(320);
     position: relative;
 
@@ -77,6 +207,8 @@
         white-space: nowrap;
     }
 
+
+
     .submit {
         width: 100px;
         height: 30px;
@@ -86,8 +218,8 @@
         background: $main_color;
         border: none;
         float: right;
-        margin-top: 10px;
         cursor: pointer;
+        margin: 10px 0px 20px 0px;
     }
 
     .successModal {
@@ -104,6 +236,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        z-index: 30;
 
         button {
             width: 100px;

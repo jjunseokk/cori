@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import "./reviewDetail.scss";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 import backBtn from "../../../../public/backBtn.svg";
@@ -11,6 +11,9 @@ import defaultIcon from "../../../../public/defaultIcon.svg";
 import ii from "../../../../public/ii.png";
 import styled from "styled-components";
 import { px2vw } from "@/util/px2vw";
+import { useQuery } from "@tanstack/react-query";
+import { showDetailPost } from "@/util/AxiosGet/AxiosPost";
+import ViewerComponent from "@/component/Write/ViewerComponent";
 
 const TextArea = styled.textarea`
   width: ${px2vw(1171)};
@@ -63,13 +66,26 @@ const ReviewDetail = () => {
   const [getComment, setGetComment] = useState<string>("");
   const [getCommentList, setGetCommentList] = useState<string[]>([]);
   const useSearch = useSearchParams();
-  const title = useSearch.get("title");
+  const params = useParams();
+
+  const { data } = useQuery({
+    queryKey: ["getDetail"],
+    queryFn: () => showDetailPost(params.params),
+  });
+
+  const getDate = new Date(data?.data.detailPost[0].createdPost);
+  const getYear = getDate.getFullYear();
+  const getMonth = getDate.getMonth() + 1;
+  const getDay = getDate.getDate();
+
+  const formattedDate = `${getYear}.${getMonth}.${getDay}`;
+  console.log(data);
 
   const CommentList = () => {
     setGetCommentList((prev) => [...prev, getComment]);
     setGetComment("");
   };
-  
+
   return (
     <div className="review_detail_container">
       <div className="review_detail_wrapper">
@@ -82,7 +98,7 @@ const ReviewDetail = () => {
               src={backBtn}
               alt="backBtn"
             />
-            <h1>{title}</h1>
+            <h1>{data?.data.detailPost[0].title}</h1>
           </div>
           <Image
             onClick={() => {
@@ -94,12 +110,24 @@ const ReviewDetail = () => {
         </div>
         <div className="userArea">
           <UserIcon>
-            <Image src={defaultIcon} alt="defaultIcon" />
+            <Image
+              src={
+                data?.data.detailPost[0].profileImg
+                  ? data?.data.detailPost[0].profileImg
+                  : defaultIcon
+              }
+              width={50}
+              height={50}
+              alt="defaultIcon"
+            />
           </UserIcon>
-          <p>userID</p>
-          <p>2024.04.04</p>
+          <p>{data?.data.detailPost[0].loginId}</p>
+          <p>{formattedDate}</p>
         </div>
-        <div></div>
+
+        <div className="viewer">
+          <ViewerComponent content={data?.data.detailPost[0].content} />
+        </div>
 
         <div className="commentArea">
           <h1>댓글</h1>

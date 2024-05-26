@@ -20,6 +20,7 @@ interface ItemData {
   loginId: string;
   view?: null | number;
   selectOption: string;
+  thumbnail:string;
 }
 interface ItemBoxType {
   type: string;
@@ -32,9 +33,6 @@ const ItemBox = ({ type, path, data }: ItemBoxType) => {
 
   const updateViewMutation = useMutation({
     mutationFn: (view: UpdateViewData) => updateView(view),
-    onSuccess: (res) => {
-      console.log(res);
-    },
   });
 
   const writeDate = new Date(data?.createdPost);
@@ -54,7 +52,7 @@ const ItemBox = ({ type, path, data }: ItemBoxType) => {
       }}
     >
       <div className="imgArea">
-        <Image width={500} height={500} src="/test.png" alt="test" />
+        <Image width={500} height={500} src={data?.thumbnail} alt="test" />
       </div>
       <div className="content">
         <p>{data?.title}</p>

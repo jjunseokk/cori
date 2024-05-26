@@ -3,7 +3,16 @@ import AxiosConfig from "./AxiosConfig";
 
 // 글쓰기
 const addPost = (postData: AddPostData, Token: string) => {
-  return AxiosConfig.post("/posts/writePost", postData, {
+  console.log(postData);
+  const formData = new FormData();
+  if (postData.thumbnail) {
+    formData.append("thumbnail", postData.thumbnail);
+  }
+  formData.append("title", postData.title);
+  formData.append("content", postData.content);
+  formData.append("selectOption", postData.selectOption);
+
+  return AxiosConfig.post("/posts/writePost", formData, {
     headers: {
       Authorization: `Bearer ${Token}`,
     },
@@ -25,4 +34,8 @@ const updateView = (view: UpdateViewData) => {
   return AxiosConfig.patch(`/posts/updateView`, view);
 };
 
-export { addPost, showPostList, updateView, showTop10 };
+const showDetailPost = (id: string[] | string) => {
+  return AxiosConfig.get(`/posts/getDetail?id=${id}`);
+};
+
+export { addPost, showPostList, updateView, showTop10, showDetailPost };

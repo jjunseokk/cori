@@ -4,7 +4,6 @@ import { px2vw } from "@/util/px2vw";
 export const Div = styled.div`
   width: ${px2vw(298)};
   height: ${px2vw(296)};
-  background: #d9d9d9;
   border-radius: 20px;
   box-shadow: 2px 4px 4px 0px #00000040;
   cursor: pointer;
@@ -16,11 +15,13 @@ export const Div = styled.div`
     transition: all 0.5s;
   }
   .imgArea {
-    width: ${px2vw(298)};
+    width: 100%;
     height: ${px2vw(140)};
     img {
       width: 100%;
       height: 100%;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
     }
   }
   .content {
